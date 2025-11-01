@@ -65,3 +65,18 @@
 ;; part 1
 (->> (cal program 0 0 {} :first [0 0] 0)
      count)
+
+;; part 2
+(let [whites (->> (cal program 0 0 {[0 0] 1} :first [0 0] 0)
+                  (filter #(= 1 (val %)))
+                  keys)
+      xs (map first whites)
+      ys (map second whites)
+      min-x (apply min xs)
+      min-y (apply min ys)
+      max-x (apply max xs)
+      max-y (apply max ys)]
+  (for [y (range max-y (dec min-y) -1)]
+    (apply str
+           (for [x (range min-x (inc max-x))]
+             (if ((set whites) [x y]) "X" ".")))))
