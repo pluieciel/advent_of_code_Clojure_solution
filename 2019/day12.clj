@@ -48,7 +48,7 @@
   (let [new-state (step state)
         new-cnt (inc cnt)
         op (fn [dict [key func]]
-             (if (or (dict key) (not= (map func (apply concat init-state)) (map func (apply concat new-state))))
+             (if (or (dict key) (apply not= (map #(map func (apply concat %)) [init-state new-state])))
                dict
                (assoc dict key new-cnt)))
         new-dict (reduce op dict [[:x first] [:y second] [:z last]])]
