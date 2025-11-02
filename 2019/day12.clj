@@ -47,19 +47,11 @@
        dict {}]
   (let [new-state (step state)
         new-cnt (inc cnt)
-        new-dict (-> dict
-                     (#(let [dict %]
-                         (if (or (dict :x) (not= (map first (apply concat init-state)) (map first (apply concat new-state))))
-                           dict
-                           (assoc dict :x new-cnt))))
-                     (#(let [dict %]
-                         (if (or (dict :y) (not= (map second (apply concat init-state)) (map second (apply concat new-state))))
-                           dict
-                           (assoc dict :y new-cnt))))
-                     (#(let [dict %]
-                         (if (or (dict :z) (not= (map last (apply concat init-state)) (map last (apply concat new-state))))
-                           dict
-                           (assoc dict :z new-cnt)))))]
+        op (fn [dict [key func]]
+             (if (or (dict key) (not= (map func (apply concat init-state)) (map func (apply concat new-state))))
+               dict
+               (assoc dict key new-cnt)))
+        new-dict (reduce op dict [[:x first] [:y second] [:z last]])]
     (if (< (count new-dict) 3)
       (recur new-state new-cnt new-dict)
       (->> (vals new-dict)
