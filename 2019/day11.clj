@@ -79,4 +79,4 @@
   (for [y (range max-y (dec min-y) -1)]
     (apply str
            (for [x (range min-x (inc max-x))]
-             (if ((set whites) [x y]) "X" ".")))))
+             (if ((set whites) [x y]) "#" " ")))))
