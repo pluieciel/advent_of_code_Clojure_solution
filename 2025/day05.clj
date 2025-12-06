@@ -2,7 +2,6 @@
 (ns day05
   (:require [clojure.string :as str]))
 
-
 (let [[fresh todo] (str/split (slurp "2025/in05") #"\n\n")]
   (def fresh (->> fresh
                   str/split-lines
