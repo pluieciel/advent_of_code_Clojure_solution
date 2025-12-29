@@ -41,6 +41,7 @@
      (reduce +))
 
 ;; part 2
+;; ref: https://old.reddit.com/r/adventofcode/comments/1pk87hl/2025_day_10_part_2_bifurcate_your_way_to_victory/
 (defn get-odd-pos [req]
   (->> req
        (map-indexed vector)
@@ -55,7 +56,6 @@
 (def cal-recur
   (memoize
    (fn [req conf]
-    ;;  (println req)
      (cond
        (every? zero? req) 0
        (some neg? req) Integer/MAX_VALUE
